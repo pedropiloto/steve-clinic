@@ -29,6 +29,7 @@ import {
   Input,
   WebId
 } from "./health-data.style";
+import { SocialEntity } from "rdf-namespaces/dist/contact";
 
 const getPodData = async webId => {
   const profile = describeSubject().isFoundAt(webId);
@@ -57,19 +58,21 @@ const getPodData = async webId => {
   createFileACLIfNotExists(fileUrl, webId);
 
   //Add Note
-  await addNote("1,1", notesFetchedDocument);
+  //await addNote("New Note " + new Date(), notesFetchedDocument);
 
   // List Notes
   let notes = notesFetchedDocument
     .getSubjectsOfType(schema.TextDigitalDocument)
     .map(x => x.getString(schema.text));
-  console.log("p:", notes);
+  console.log("Note Debug:", notes);
 
   //Share with other users
   addPermission(fileUrl, webId, [
     "https://pedropiloto.solid.community/profile/card#me",
     "https://pedropiloto2.solid.community/profile/card#me"
   ]);
+
+  return notes;
 };
 
 async function addNote(note, notesList) {
@@ -82,24 +85,35 @@ async function addNote(note, notesList) {
 }
 
 export const Editor = ({ ownerWebId }) => {
-  getPodData(ownerWebId);
-  return (
-    <Form>
-      <FullGridSize>
-        <WebId>
-          <b>
-            Connected as: <a href={ownerWebId}>{ownerWebId}</a>
-          </b>
-        </WebId>
-      </FullGridSize>
-    </Form>
-  );
-};
+  let notesPromise = getPodData(ownerWebId);
+  let notes = [];
+  notesPromise.then(function(result) {
+    console.log("success: " + result)
+    notes = result;
 
-/**
- * A React component page that is displayed when there's no valid route. Users can click the button
- * to get back to the home/welcome page.
- */
+    return (
+      <Form>
+        <FullGridSize>
+          <WebId>
+            <b>
+              Connected as: <a href={ownerWebId}>{ownerWebId}</a>
+            </b>
+          </WebId>
+        </FullGridSize>
+        <FullGridSize>
+          { notes.map(note => <p>{ note }</p>) }
+          <p>hi</p>
+        </FullGridSize>
+      </Form>
+    );
+
+  }, function(err) {
+    console.log(err)
+  });
+  
+};
+ 
+
 const HealthData = ({ webId }: Props) => {
   const { t } = useTranslation();
   console.log(webId);
