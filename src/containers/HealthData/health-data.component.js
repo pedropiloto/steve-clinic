@@ -91,26 +91,25 @@ export const Editor = ({ ownerWebId }) => {
     console.log("success: " + result)
     notes = result;
 
-    return (
-      <Form>
-        <FullGridSize>
-          <WebId>
-            <b>
-              Connected as: <a href={ownerWebId}>{ownerWebId}</a>
-            </b>
-          </WebId>
-        </FullGridSize>
-        <FullGridSize>
-          { notes.map(note => <p>{ note }</p>) }
-          <p>hi</p>
-        </FullGridSize>
-      </Form>
-    );
-
   }, function(err) {
     console.log(err)
   });
   
+  return (
+    <Form>
+      <FullGridSize>
+        <WebId>
+          <b>
+            Connected as: <a href={ownerWebId}>{ownerWebId}</a>
+          </b>
+        </WebId>
+      </FullGridSize>
+      <FullGridSize>
+        { notes.map(note => <p>{ note }</p>) }
+        <p>hi</p>
+      </FullGridSize>
+    </Form>
+  );
 };
  
 
