@@ -14,13 +14,16 @@ class NotesComponent extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            notes: []
+            notes: [],
+            webId: props.owner
         };
+
+        console.log(this.state);
     }
 
     componentDidMount() {
         
-        getNotesDataFromPod().then((result) => {
+        getNotesDataFromPod(this.state.webId).then((result) => {
             console.log("Got this notes from the pod: " + result);
             this.setState({notes: result})
         }, (err) => {
@@ -36,6 +39,7 @@ class NotesComponent extends React.Component {
 }
 
 const getNotesDataFromPod = async webId => {
+    console.log("webid: " + webId);
     const profile = describeSubject().isFoundAt(webId);
     const storage = describeContainer().isFoundOn(profile, space.storage);
     const publicTypeIndex = describeDocument().isFoundOn(
