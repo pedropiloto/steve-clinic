@@ -16,7 +16,7 @@ import {
   fetchDocument
 } from "plandoc";
 import { space, solid, rdf, schema } from "rdf-namespaces";
-
+import NotesComponent from "./notes-component";
 import { addPermission, createFileACLIfNotExists } from "./acl-utils";
 import {
   TextEditorWrapper,
@@ -85,15 +85,6 @@ async function addNote(note, notesList) {
 }
 
 export const Editor = ({ ownerWebId }) => {
-  let notesPromise = getPodData(ownerWebId);
-  let notes = [];
-  notesPromise.then(function(result) {
-    console.log("success: " + result)
-    notes = result;
-
-  }, function(err) {
-    console.log(err)
-  });
   
   return (
     <Form>
@@ -105,8 +96,7 @@ export const Editor = ({ ownerWebId }) => {
         </WebId>
       </FullGridSize>
       <FullGridSize>
-        { notes.map(note => <p>{ note }</p>) }
-        <p>hi</p>
+        <NotesComponent/>
       </FullGridSize>
     </Form>
   );
