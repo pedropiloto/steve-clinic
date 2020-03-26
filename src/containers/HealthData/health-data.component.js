@@ -30,7 +30,7 @@ export const Editor = ({ ownerWebId }) => {
         </WebId>
       </FullGridSize>
       <FullGridSize>
-        <NotesComponent owner = { ownerWebId } />
+        <NotesComponent owner = { ownerWebId }/>
       </FullGridSize>
     </Form>
   );

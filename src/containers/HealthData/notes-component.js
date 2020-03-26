@@ -18,12 +18,12 @@ class NotesComponent extends React.Component {
         super(props)
         this.state = {
             notes: [],
-            webId: props.owner,
+            webId: props.owner
         };
     }
 
     componentDidMount() {
-        
+        console.log(this.state);
         getNotesDataFromPod(this.state.webId).then((result) => {
             this.setState({notes: result})
         }, (err) => {
@@ -31,8 +31,8 @@ class NotesComponent extends React.Component {
         });
     }
 
-    teste() {
-        console.log("carregado com sucesso");
+    refreshNotes() {
+        this.updateNotesList();
     }
 
     render() {
@@ -44,7 +44,7 @@ class NotesComponent extends React.Component {
                     { notes.map(note => <p>{ note }</p>) }
                 </div>
                 <div>
-                    <Button type = "submit" onClick = { () => this.teste() }>Update List</Button>
+                    <Button type = "button" onClick = { () => this.refreshNotes() }>Update List</Button>
                 </div>
             </div>
         );
