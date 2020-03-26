@@ -13,17 +13,10 @@ import {
   Header,
   Form,
   FullGridSize,
-  WebId
+  WebId,
+  Button
 } from "./health-data.style";
 
-async function addNote(note, notesList) {
-  const newNote = notesList.addSubject();
-  newNote.addRef(rdf.type, schema.TextDigitalDocument);
-  newNote.addString(schema.text, note);
-  newNote.addDateTime(schema.dateCreated, new Date(Date.now()));
-
-  return await notesList.save([newNote]);
-}
 
 export const Editor = ({ ownerWebId }) => {
   
@@ -37,7 +30,8 @@ export const Editor = ({ ownerWebId }) => {
         </WebId>
       </FullGridSize>
       <FullGridSize>
-        <NotesComponent owner = { ownerWebId }/>
+        <NotesComponent owner = { ownerWebId } />
+        <Button>Update List</Button>
       </FullGridSize>
     </Form>
   );

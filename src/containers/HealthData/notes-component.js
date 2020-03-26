@@ -8,6 +8,9 @@ import {
   } from "plandoc";
 import { space, solid, rdf, schema } from "rdf-namespaces";
 import { addPermission, createFileACLIfNotExists } from "./acl-utils";
+import addNote from "./add-note";
+import { Button } from './health-data.style';
+import { amountOfThisGood } from 'rdf-namespaces/dist/schema';
 
 class NotesComponent extends React.Component {
 
@@ -15,26 +18,39 @@ class NotesComponent extends React.Component {
         super(props)
         this.state = {
             notes: [],
-            webId: props.owner
+            webId: props.owner,
         };
-
-        console.log(this.state);
     }
 
     componentDidMount() {
         
         getNotesDataFromPod(this.state.webId).then((result) => {
-            console.log("Got this notes from the pod: " + result);
             this.setState({notes: result})
         }, (err) => {
             console.log("An error occurred when reading the notes from the pod: "  +  err);
         });
     }
 
+
     render() {
-        const readNotes = this.state.notes;
-        console.log("Read notes " + readNotes);
-        return this.state.notes.map(note => <p>{ note }</p>)
+        this.updateNotesList();
+
+        const { notes } = this.state.notes;
+
+        return (
+            <div>
+                { notes.map(note => <p>{ note }</p>) }
+            </div>
+        );
+    }
+
+    updateNotesList() {
+
+        getNotesDataFromPod(this.state.webId).then((result) => {
+            this.setState({notes: result})
+        }, (err) => {
+            console.log("An error occurred when reading the notes from the pod: "  +  err);
+        });    
     }
 }
 
@@ -66,7 +82,7 @@ const getNotesDataFromPod = async webId => {
     createFileACLIfNotExists(fileUrl, webId);
   
     //Add Note
-    //await addNote("New Note " + new Date(), notesFetchedDocument);
+    await addNote("New Note " + new Date(), notesFetchedDocument);
   
     // List Notes
     let notes = notesFetchedDocument
