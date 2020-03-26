@@ -31,7 +31,6 @@ export const Editor = ({ ownerWebId }) => {
       </FullGridSize>
       <FullGridSize>
         <NotesComponent owner = { ownerWebId } />
-        <Button>Update List</Button>
       </FullGridSize>
     </Form>
   );

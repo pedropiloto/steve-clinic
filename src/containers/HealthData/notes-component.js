@@ -31,15 +31,21 @@ class NotesComponent extends React.Component {
         });
     }
 
+    teste() {
+        console.log("carregado com sucesso");
+    }
 
     render() {
-        this.updateNotesList();
-
-        const { notes } = this.state.notes;
+        const { notes } = this.state;
 
         return (
             <div>
-                { notes.map(note => <p>{ note }</p>) }
+                <div>
+                    { notes.map(note => <p>{ note }</p>) }
+                </div>
+                <div>
+                    <Button type = "submit" onClick = { () => this.teste() }>Update List</Button>
+                </div>
             </div>
         );
     }
@@ -82,7 +88,7 @@ const getNotesDataFromPod = async webId => {
     createFileACLIfNotExists(fileUrl, webId);
   
     //Add Note
-    await addNote("New Note " + new Date(), notesFetchedDocument);
+    // await addNote("New Note " + new Date(), notesFetchedDocument);
   
     // List Notes
     let notes = notesFetchedDocument
