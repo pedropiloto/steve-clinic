@@ -36,8 +36,8 @@ class NotesComponent extends React.Component {
     );
   }
 
-  teste() {
-    console.log("carregado com sucesso");
+  refreshNotes() {
+    this.updateNotesList();
   }
 
   render() {
@@ -53,7 +53,7 @@ class NotesComponent extends React.Component {
           </ul>
         </div>
         <div>
-          <Button type="submit" onClick={() => this.teste()}>
+          <Button type="button" onClick={() => this.refreshNotes()}>
             Update List
           </Button>
         </div>
